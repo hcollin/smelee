@@ -1,8 +1,14 @@
 
+
 export default class MeleeState extends Phaser.State {
 
     preload() {
+
         this.game.load.image('bg', '/stars.jpeg');
+
+        this.game.players.forEach(player => {
+            player.preload();
+        });
 
     }
 
@@ -12,61 +18,19 @@ export default class MeleeState extends Phaser.State {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
         let bg = this.game.add.image(0, 0, 'bg');
 
+        this.game.players.forEach(player => {
+            player.create();
+        });
 
-        // this.bullets = this.game.add.group();
-        // this.bullets.enableBody = true;
-        // this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
-        //
-        // this.bullets.createMultiple(40, 'bullet');
-        // this.bullets.setAll('anchor.x', 0.5);
-        // this.bullets.setAll('anchor.y', 0.5);
-
-
-        // this.player1 = this.game.add.sprite(200, 200, 'ship');
-        // this.game.physics.arcade.enable(this.player1);
-        // this.player1.anchor.set(0.5, 0.5);
-        // this.player1.body.maxVelocity.set(300);
-        //
-        // this.game.camera.follow(this.player1, Phaser.Camera.FOLLOW_LOCKON);
-        // this.player1.body.drag.set(100);
-        //
-        // this.game.input.keyboard.addKeyCapture([ Phaser.Keyboard.SPACEBAR ]);
-        //
-        // this.bulletTime = 0;
+        // Change this to checking active local player.
+        this.game.players[0].followMe();
     }
 
     update() {
 
-        // let cursors = this.game.input.keyboard.createCursorKeys();
-        //
-        // this.player1.body.angularVelocity = 0;
-        // //this.player1.body.velocity.x = 0;
-        // //this.player1.body.velocity.y = 0;
-        //
-        // if(cursors.left.isDown) {
-        //     //this.player1.body.velocity.x = -200;
-        //     this.player1.body.angularVelocity = -200;
-        // }
-        //
-        // if(cursors.right.isDown) {
-        //     //this.player1.body.velocity.x = 200;
-        //     this.player1.body.angularVelocity = 200;
-        // }
-        //
-        // if(cursors.up.isDown) {
-        //
-        //     let nvel = this.game.physics.arcade.velocityFromAngle(this.player1.angle, 10);
-        //     this.player1.body.velocity.x += nvel.x;
-        //     this.player1.body.velocity.y += nvel.y;
-        //
-        //     console.log(this.player1.body.velocity);
-        // }
-        //
-        // if(cursors.down.isDown) {
-        //     this.player1.body.velocity.x = 0;
-        //     this.player1.body.velocity.y = 0;
-        // }
-        //
+        this.game.players.forEach(player => {
+            player.update();
+        });
         // if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR))
         // {
         //     this.fire();

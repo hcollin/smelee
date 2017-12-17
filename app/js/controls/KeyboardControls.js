@@ -2,7 +2,9 @@
 
 export default class KeyboardControls {
 
-    constructor() {
+    constructor(game) {
+
+        this.game = game;
 
         this.status = {
             up: false,
@@ -32,16 +34,21 @@ export default class KeyboardControls {
             confirm: 13
         };
 
-        this.keys = this.keyCharBinds.keys();
+        this.keys = Object.keys(this.keyCharBinds);
+
+    }
+
+    preload() {
 
     }
 
     create() {
-        this.game.input.keyboard.addKeyCapture(this.keyCharBinds.values());
+        this.game.input.keyboard.addKeyCapture(Object.values(this.keyCharBinds));
     }
 
     update() {
-        this.keys.forEech(key => {
+        this.keys.forEach(key => {
+
            this.status[key] = this.game.input.keyboard.isDown(this.keyCharBinds[key]);
         });
         return this.status;

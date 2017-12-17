@@ -25,8 +25,14 @@ export default class BasicShip {
         this.sprite.body.drag.set(100);
     }
 
-    update() {
+    update(controlsState=false) {
         this.sprite.body.angularVelocity = 0;
+        if(controlsState) {
+            if(controlsState.up) this.up();
+            if(controlsState.down) this.down();
+            if(controlsState.left) this.left();
+            if(controlsState.right) this.right();
+        }
     }
 
     up() {
