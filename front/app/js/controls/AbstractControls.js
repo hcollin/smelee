@@ -39,6 +39,10 @@ export default class AbstractControls {
 
     }
 
+    setStatus(data) {
+        this.status = data;
+        this.changed = true;
+    }
 
 
 }

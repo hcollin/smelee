@@ -1,14 +1,19 @@
 
+import AbstractShip from './AbstractShip';
 
-export default class BasicShip {
+export default class BasicShip extends AbstractShip {
 
-    constructor(game) {
-        this.game = game;
+    constructor(game,sx=false, sy=false) {
+        super(game,sx,sy);
 
         this.turnSpeed = 200;
         this.speed = 15;
 
         this.fire1LastShot = 0;
+
+        this.shipType = "BASICSHIP";
+
+        this.health = 100;
 
     }
 
@@ -18,8 +23,8 @@ export default class BasicShip {
     }
 
     create() {
-
-        this.sprite = this.game.add.sprite(200, 200, 'BasicShip');
+        console.log("Create to ", this.sx, this.sy);
+        this.sprite = this.game.add.sprite(this.sx, this.sy, 'BasicShip');
         this.game.physics.arcade.enable(this.sprite);
         this.sprite.anchor.set(0.5, 0.5);
         this.sprite.body.maxVelocity.set(300);
@@ -37,6 +42,9 @@ export default class BasicShip {
     }
 
     update(controlsState=false) {
+        if(this.sprite === undefined) {
+            return;
+        }
         this.sprite.body.angularVelocity = 0;
         if(controlsState) {
             if(controlsState.up) this.up();
@@ -88,6 +96,29 @@ export default class BasicShip {
 
     special() {
 
+    }
+
+    hits(targetPlayer) {
+        this.game.physics.arcade.overlap(targetPlayer.ship.sprite, this.fire1group, (ship, shot) => {
+            console.log("HIT", targetPlayer.health);
+            targetPlayer.ship.damage(5);
+            this.fire1group.remove(shot);
+        });
+    }
+
+    damage(damage) {
+        this.health -= damage;
+        if(this.health < 0) {
+            this.health = 0;
+        }
+    }
+
+    isAlive() {
+        return this.health > 0;
+    }
+
+    destroy() {
+        this.sprite.destroy();
     }
 
 
