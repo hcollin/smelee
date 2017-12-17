@@ -6,11 +6,11 @@ export default class SocketConnection {
 
     }
 
-    send(dataObject) {
-
+    send(playerid, dataObject) {
+        //console.log("Player : ", playerid, "\nControls", dataObject);
     }
 
-    
+
 
 
 

@@ -1,16 +1,21 @@
 
+import uuid from 'uuid';
+
 import BasicShip from './ships/BasicShip';
 import KeyboardControls from './controls/KeyboardControls';
 
 export default class Player {
 
-    constructor(game) {
+    constructor(game,ship=false, controls=false) {
+
+        this.id = uuid.v4();
 
         this.game = game;
 
-        this.controls = new KeyboardControls(game);
-        this.ship = new BasicShip(game);
-        this.connection = null;
+        this.controls = controls ? controls : new KeyboardControls(game);
+        this.ship = ship ? ship : new BasicShip(game);
+
+        this.isLocalPlayer = false;
 
         this.score = null;
 
@@ -29,12 +34,15 @@ export default class Player {
 
     followMe() {
         this.game.camera.follow(this.ship.sprite, Phaser.Camera.FOLLOW_LOCKON);
+        this.isLocalPlayer = true;
     }
 
     update() {
         this.controls.update();
         this.ship.update(this.controls.status);
-
+        if(this.controls.changed && this.isLocalPlayer) {
+            this.game.connection.send(this.id, this.controls.status);
+        }
     }
 
     render() {

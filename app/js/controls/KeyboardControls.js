@@ -1,24 +1,11 @@
 
+import AbstractControls from './AbstractControls';
 
-export default class KeyboardControls {
+export default class KeyboardControls extends AbstractControls {
 
     constructor(game) {
 
-        this.game = game;
-
-        this.status = {
-            up: false,
-            down: false,
-            left: false,
-            right: false,
-
-            fire1: false,
-            fire2: false,
-            special: false,
-
-            pause: false,
-            confirm: false
-        };
+        super(game);
 
         this.keyCharBinds = {
             up: 38,
@@ -38,18 +25,16 @@ export default class KeyboardControls {
 
     }
 
-    preload() {
-
-    }
-
     create() {
         this.game.input.keyboard.addKeyCapture(Object.values(this.keyCharBinds));
     }
 
     update() {
+        this.changed = false;
         this.keys.forEach(key => {
-
-           this.status[key] = this.game.input.keyboard.isDown(this.keyCharBinds[key]);
+            const nowDown = this.game.input.keyboard.isDown(this.keyCharBinds[key]);
+            if(this.status[key] !== nowDown) this.changed = true;
+            this.status[key] = nowDown;
         });
         return this.status;
     }
