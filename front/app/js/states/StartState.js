@@ -10,6 +10,11 @@ export default class StartState extends Phaser.State {
     }
 
     create() {
+
+        if(this.game.configuration.scale) {
+            this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        }
+
         let bg = this.game.add.image(0, 0, 'bg');
 
 

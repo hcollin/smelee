@@ -81,7 +81,7 @@ export default class BasicShip extends AbstractShip {
 
             if (bullet)
             {
-                bullet.reset(this.sprite.body.x + 60, this.sprite.body.y + 60);
+                bullet.reset(this.sprite.body.x + 30, this.sprite.body.y + 30);
                 bullet.lifespan = 2000;
                 bullet.rotation = this.sprite.rotation;
                 this.game.physics.arcade.velocityFromRotation(this.sprite.rotation, 800, bullet.body.velocity);

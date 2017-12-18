@@ -4,5 +4,10 @@
 }
 
 body {
+  width: 100%;
+  background-color: black;
+}
 
+body > canvas {
+  margin: 0 auto;
 }

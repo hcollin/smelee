@@ -6,10 +6,13 @@ import SocketConnection from './SocketConnection.js';
 
 export default class Game extends Phaser.Game {
 
-    constructor() {
-        // super(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.AUTO);
-        super(window.innerWidth, window.innerHeight, Phaser.AUTO);
-        console.log(window.devicePixelRatio, window.innerWidth, window.innerHeight);
+    constructor(configuration) {
+        // Phaser.CANVAS, Phaser.AUTO
+        //super(window.innerWidth, window.innerHeight, Phaser.AUTO);
+        super(configuration.resolution.width, configuration.resolution.height, configuration.renderer);
+
+        this.configuration = configuration;
+
 
 
         this.players = [];
@@ -27,7 +30,8 @@ export default class Game extends Phaser.Game {
 
     startGame() {
         this.time.advancedTiming = true;
-
+        console.log(this.scale.scaleMode, Phaser.ScaleManager.RESIZE);
+        //this.scale.startFullScreen();
         this.state.start('Melee');
         this.gameStarted = true;
     }
