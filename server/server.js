@@ -1,5 +1,6 @@
 const WebSocket = require('ws');
 
+const Game = require('./Game');
 
 /**
  * This is the actual game server class that handles a single instance of a game.
@@ -170,4 +171,12 @@ class PlayerConnection {
 }
 
 
-let server = new GameServer();
+//let server = new GameServer();
+
+let mygame = new Game.Game();
+mygame.newGame();
+mygame.start();
+
+setTimeout(() => {
+    mygame.stop();
+}, 2000);
